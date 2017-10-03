@@ -4,45 +4,60 @@ import java.util.Stack;
 
 public class CoinReserve {
 
-    Stack<Coin> nickelStack = new Stack<>();
-    Stack<Coin> dimeStack = new Stack<>();
-    Stack<Coin> quarterStack = new Stack<>();
+    Stack<Coin> fiveStack = new Stack<>();
+    Stack<Coin> tenStack = new Stack<>();
+    Stack<Coin> twentyFiveStack = new Stack<>();
 
     public boolean coinAccepted(Coin coin) {
 
         switch(coin) {
-            case PENNY:
+            case ONE:
                 return false;
-            case NICKEL:
-                nickelStack.push(Coin.NICKEL);
+            case FIVE:
                 return true;
-            case DIME:
-                dimeStack.push(Coin.DIME);
+            case TEN:
                 return true;
-            case QUARTER:
-                quarterStack.push(Coin.QUARTER);
+            case TWENTYFIVE:
                 return true;
         }
         if (coinAccepted(coin)) return true;
         else return false;
     }
 
-    public int reserveTotal(Stack<Coin> nickelStack, Stack<Coin> dimeStack, Stack<Coin> quarterStack) {
-        nickelStack = this.nickelStack;
-        dimeStack = this.dimeStack;
-        quarterStack = this.quarterStack;
+    public int reserveTotal(Stack<Coin> fiveStack, Stack<Coin> tenStack, Stack<Coin> twentyFiveStack) {
 
-        return (nickelStack.size() * 5) + (dimeStack.size() * 10) + (quarterStack.size() * 25);
+        fiveStack = this.fiveStack;
+        tenStack = this.tenStack;
+        twentyFiveStack = this.twentyFiveStack;
+
+        return (fiveStack.size() * 5) + (tenStack.size() * 10) + (twentyFiveStack.size() * 25);
 
     }
+
+    public void addCoin(Coin coin) {
+
+        if(coinAccepted(coin)) {
+
+            switch(coin) {
+                case FIVE:
+                    fiveStack.push(Coin.FIVE);
+                case TEN:
+                    tenStack.push(Coin.TEN);
+                case TWENTYFIVE:
+                    twentyFiveStack.push(Coin.TWENTYFIVE);
+            }
+        }
+    }
+
+
 
     public void stockReserve() {
 
         for(int i = 0; i < 10; i++) {
 
-            nickelStack.push(Coin.NICKEL);
-            dimeStack.push(Coin.DIME);
-            quarterStack.push(Coin.QUARTER);
+            fiveStack.push(Coin.FIVE);
+            tenStack.push(Coin.TEN);
+            twentyFiveStack.push(Coin.TWENTYFIVE);
         }
     }
 }

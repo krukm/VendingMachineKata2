@@ -11,63 +11,63 @@ public class CoinReserveTest {
 
     @Test
     public void rejectPennyWhenAdded() {
-        assertFalse(coinReserve.coinAccepted(Coin.PENNY));
+        assertFalse(coinReserve.coinAccepted(Coin.ONE));
     }
 
     @Test
     public void acceptNickelWhenAdded() {
-        assertTrue(coinReserve.coinAccepted(Coin.NICKEL));
+        assertTrue(coinReserve.coinAccepted(Coin.FIVE));
     }
 
     @Test
     public void acceptDimeWhenAdded() {
-        assertTrue(coinReserve.coinAccepted(Coin.DIME));
+        assertTrue(coinReserve.coinAccepted(Coin.TEN));
     }
 
     @Test
     public void acceptQuarterWhenAdded() {
-        assertTrue(coinReserve.coinAccepted(Coin.QUARTER));
+        assertTrue(coinReserve.coinAccepted(Coin.TWENTYFIVE));
     }
 
     @Test
     public void addNickelToNickelStackWhenAccepted() {
-        coinReserve.coinAccepted(Coin.NICKEL);
-        assertFalse(coinReserve.nickelStack.empty());
+        coinReserve.addCoin(Coin.FIVE);
+        assertFalse(coinReserve.fiveStack.empty());
     }
 
     @Test
     public void addDimeToDimeStackWhenAccepted() {
-        coinReserve.coinAccepted(Coin.DIME);
-        assertFalse(coinReserve.dimeStack.empty());
+        coinReserve.addCoin(Coin.TEN);
+        assertFalse(coinReserve.tenStack.empty());
     }
 
     @Test
     public void addQuarterToQuarterStackWhenAccepted() {
-        coinReserve.coinAccepted(Coin.QUARTER);
-        assertFalse(coinReserve.quarterStack.empty());
+        coinReserve.addCoin(Coin.TWENTYFIVE);
+        assertFalse(coinReserve.twentyFiveStack.empty());
     }
 
     @Test
     public void addTenNickelsWhenReserveIsStocked() {
         coinReserve.stockReserve();
-        assertEquals(10, coinReserve.nickelStack.size());
+        assertEquals(10, coinReserve.fiveStack.size());
     }
 
     @Test
     public void addTenDimesWhenReserveIsStocked() {
         coinReserve.stockReserve();
-        assertEquals(10, coinReserve.dimeStack.size());
+        assertEquals(10, coinReserve.tenStack.size());
     }
 
     @Test
     public void addTenQuartersWhenReserveIsStocked() {
         coinReserve.stockReserve();
-        assertEquals(10, coinReserve.quarterStack.size());
+        assertEquals(10, coinReserve.twentyFiveStack.size());
     }
 
     @Test
     public void getTheTotalOfCoinReserveWhenCalled() {
         coinReserve.stockReserve();
-        assertEquals((Coin.NICKEL.value * 10) + (Coin.DIME.value * 10) + (Coin.QUARTER.value * 10), coinReserve.reserveTotal(coinReserve.nickelStack, coinReserve.dimeStack, coinReserve.quarterStack));
+        assertEquals((Coin.FIVE.value * 10) + (Coin.TEN.value * 10) + (Coin.TWENTYFIVE.value * 10), coinReserve.reserveTotal(coinReserve.fiveStack, coinReserve.tenStack, coinReserve.twentyFiveStack));
     }
 }
