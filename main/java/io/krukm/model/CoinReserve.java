@@ -49,8 +49,13 @@ public class CoinReserve {
         }
     }
 
+    public void removeCoin(Stack<Coin> coinStack) {
+        if(!coinStack.empty()) {
+            coinStack.pop();
+        }
+    }
 
-
+    
     public void stockReserve() {
 
         for(int i = 0; i < 10; i++) {

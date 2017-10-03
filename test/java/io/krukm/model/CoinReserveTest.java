@@ -70,4 +70,25 @@ public class CoinReserveTest {
         coinReserve.stockReserve();
         assertEquals((Coin.FIVE.value * 10) + (Coin.TEN.value * 10) + (Coin.TWENTYFIVE.value * 10), coinReserve.reserveTotal(coinReserve.fiveStack, coinReserve.tenStack, coinReserve.twentyFiveStack));
     }
+
+    @Test
+    public void removeNickelWithRemoveCoin() {
+        coinReserve.stockReserve();
+        coinReserve.removeCoin(coinReserve.fiveStack);
+        assertEquals(9, coinReserve.fiveStack.size());
+    }
+
+    @Test
+    public void removeDimeWithRemoveCoin() {
+        coinReserve.stockReserve();
+        coinReserve.removeCoin(coinReserve.tenStack);
+        assertEquals(9, coinReserve.tenStack.size());
+    }
+
+    @Test
+    public void removeQuarterWithRemoveCoin() {
+        coinReserve.stockReserve();
+        coinReserve.removeCoin(coinReserve.twentyFiveStack);
+        assertEquals(9, coinReserve.twentyFiveStack.size());
+    }
 }
