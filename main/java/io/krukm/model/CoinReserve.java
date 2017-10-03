@@ -26,4 +26,14 @@ public class CoinReserve {
         if (coinAccepted(coin)) return true;
         else return false;
     }
+
+    public void stockReserve() {
+
+        for(int i = 0; i < 10; i++) {
+
+            nickelStack.push(Coin.NICKEL);
+            dimeStack.push(Coin.DIME);
+            quarterStack.push(Coin.QUARTER);
+        }
+    }
 }
