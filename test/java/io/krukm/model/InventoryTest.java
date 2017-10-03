@@ -3,6 +3,8 @@ package io.krukm.model;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class InventoryTest {
 
@@ -29,21 +31,21 @@ public class InventoryTest {
     @Test
     public void whenColaIsCalledPullColaFromColaStack() {
         inventory.stockInventory();
-        inventory.removeProduct(Product.COLA);
+        inventory.dispenseProduct(Product.COLA);
         assertEquals(9, inventory.colaStack.size());
     }
 
     @Test
     public void whenChipsIsCalledPullChipsFromChipStack() {
         inventory.stockInventory();
-        inventory.removeProduct(Product.CHIPS);
+        inventory.dispenseProduct(Product.CHIPS);
         assertEquals(9, inventory.chipsStack.size());
     }
 
     @Test
     public void whenCandyIsCalledPullCandyFromCandyStack() {
         inventory.stockInventory();
-        inventory.removeProduct(Product.CANDY);
+        inventory.dispenseProduct(Product.CANDY);
         assertEquals(9, inventory.candyStack.size());
     }
 
@@ -69,5 +71,16 @@ public class InventoryTest {
             inventory.candyStack.push(Product.CANDY);
         }
         assertEquals(5, inventory.getProductStock(Product.CANDY));
+    }
+
+    @Test
+    public void whenProductIsInStockReturnTrue() {
+        inventory.candyStack.push(Product.CANDY);
+        assertTrue(inventory.productInStock(Product.CANDY));
+    }
+
+    @Test
+    public void whenProductIsNotInStockReturnFalse() {
+        assertFalse(inventory.productInStock(Product.COLA));
     }
 }
