@@ -47,21 +47,21 @@ public class CoinTest {
 
     @Test
     public void whenAPennyIsCalledReturnPennyValue() {
-        assertEquals(0.01, Coin.PENNY.value);
+        assertEquals(1, Coin.PENNY.value);
     }
 
     @Test
     public void whenANickelIsCalledReturnNickelValue() {
-        assertEquals(0.05, Coin.NICKEL.value);
+        assertEquals(5, Coin.NICKEL.value);
     }
 
     @Test
     public void whenADimeIsCalledReturnDimeValue() {
-        assertEquals(0.10, Coin.DIME.value);
+        assertEquals(10, Coin.DIME.value);
     }
 
     @Test
     public void whenAQuarterIsCalledReturnQuarterValue() {
-        assertEquals(0.25, Coin.QUARTER.value);
+        assertEquals(25, Coin.QUARTER.value);
     }
 }

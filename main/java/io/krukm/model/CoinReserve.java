@@ -27,6 +27,15 @@ public class CoinReserve {
         else return false;
     }
 
+    public int reserveTotal(Stack<Coin> nickelStack, Stack<Coin> dimeStack, Stack<Coin> quarterStack) {
+        nickelStack = this.nickelStack;
+        dimeStack = this.dimeStack;
+        quarterStack = this.quarterStack;
+
+        return (nickelStack.size() * 5) + (dimeStack.size() * 10) + (quarterStack.size() * 25);
+
+    }
+
     public void stockReserve() {
 
         for(int i = 0; i < 10; i++) {
