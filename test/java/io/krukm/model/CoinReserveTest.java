@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 public class CoinReserveTest {
 
     private CoinReserve coinReserve = new CoinReserve();
-    Stack<Coin> change = new Stack<>();
+    private Stack<Coin> change = new Stack<>();
 
     @Test
     public void rejectOneWhenAdded() {
@@ -143,5 +143,31 @@ public class CoinReserveTest {
         coinReserve.tenStack.removeAllElements();
         coinReserve.makeChange(100, 140);
         assertEquals(change, coinReserve.coinReturn);
+    }
+
+    @Test
+    public void whenCoinReturnRequestedReturnCoins() {
+        change.push(Coin.TWENTYFIVE);
+        change.push(Coin.TWENTYFIVE);
+        change.push(Coin.TWENTYFIVE);
+        change.push(Coin.TEN);
+        change.push(Coin.FIVE);
+        coinReserve.coinReturn.push(Coin.TWENTYFIVE);
+        coinReserve.coinReturn.push(Coin.TWENTYFIVE);
+        coinReserve.coinReturn.push(Coin.TWENTYFIVE);
+        coinReserve.coinReturn.push(Coin.TEN);
+        coinReserve.coinReturn.push(Coin.FIVE);
+        assertEquals(change, coinReserve.getCoinReturn());
+    }
+
+    @Test
+    public void whenCoinReturnRequestedClearCoinReturn() {
+        coinReserve.coinReturn.push(Coin.TWENTYFIVE);
+        coinReserve.coinReturn.push(Coin.TWENTYFIVE);
+        coinReserve.coinReturn.push(Coin.TWENTYFIVE);
+        coinReserve.coinReturn.push(Coin.TEN);
+        coinReserve.coinReturn.push(Coin.FIVE);
+        coinReserve.getCoinReturn();
+        assertTrue(coinReserve.coinReturn.empty());
     }
 }

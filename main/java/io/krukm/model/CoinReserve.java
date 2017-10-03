@@ -108,6 +108,17 @@ public class CoinReserve {
         return stackTotal(coinReturn);
     }
 
+    public Stack<Coin> getCoinReturn() {
+        Stack<Coin> tempReturn = new Stack<>();
+
+        for (Coin coin : coinReturn) {
+            tempReturn.push(coin);
+        }
+
+        this.coinReturn.removeAllElements();
+        return tempReturn;
+    }
+
     public int stackTotal(Stack<Coin> coinStack) {
 
         int total = 0;
