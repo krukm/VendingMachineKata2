@@ -170,4 +170,23 @@ public class CoinReserveTest {
         coinReserve.getCoinReturn();
         assertTrue(coinReserve.coinReturn.empty());
     }
+
+    @Test
+    public void checkCoinReserveToMakeSureChangeCanBeMadeIfOverPaid() {
+        coinReserve.stockReserve();
+        assertTrue(coinReserve.canMakeChange());
+    }
+
+    @Test
+    public void whenTwentyFiveStackIsEmptyMakeSureChangeCanBeMadeWithTensAndOnes() {
+        coinReserve.stockReserve();
+        coinReserve.twentyFiveStack.removeAllElements();
+        assertTrue(coinReserve.canMakeChange());
+    }
+
+    @Test
+    public void whenFiveStackIsEmptyAndTenStackHasOneMakeSureChangeCanNotBeMade() {
+        coinReserve.tenStack.add(Coin.TEN);
+        assertFalse(coinReserve.canMakeChange());
+    }
 }

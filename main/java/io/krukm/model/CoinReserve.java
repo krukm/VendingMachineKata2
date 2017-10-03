@@ -119,6 +119,28 @@ public class CoinReserve {
         return tempReturn;
     }
 
+    public boolean canMakeChange() {
+        //25
+        if (this.twentyFiveStack.size() == 0) {
+            if(this.tenStack.size() < 3  && this.fiveStack.size() == 0) {
+                return false;
+            } else if (this.tenStack.size() < 2 && this.fiveStack.size() < 3) {
+                return false;
+            } else if (this.tenStack.size() == 0 && this.fiveStack.size() < 5) {
+                return false;
+            }
+        //20 and below
+        } else if (this.tenStack.size() < 2) {
+            if (this.fiveStack.size() < 2) {
+                return false;
+            } else if (this.fiveStack.size() > 3) {
+                return true;
+            }
+        }
+
+        return true;
+    }
+
     public int stackTotal(Stack<Coin> coinStack) {
 
         int total = 0;
