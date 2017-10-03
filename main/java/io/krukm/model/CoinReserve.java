@@ -108,7 +108,7 @@ public class CoinReserve {
         return stackTotal(coinReturn);
     }
 
-    public Stack<Coin> getCoinReturn() {
+    public Stack<Coin> activateCoinReturn() {
         Stack<Coin> tempReturn = new Stack<>();
 
         for (Coin coin : coinReturn) {

@@ -46,4 +46,28 @@ public class InventoryTest {
         inventory.removeProduct(Product.CANDY);
         assertEquals(9, inventory.candyStack.size());
     }
+
+    @Test
+    public void getCurrentColaStockWithGetProductStock() {
+        for (int i = 0; i < 5; i++) {
+            inventory.colaStack.push(Product.COLA);
+        }
+        assertEquals(5, inventory.getProductStock(Product.COLA));
+    }
+
+    @Test
+    public void getCurrentChipStockWithGetProductStock() {
+        for (int i = 0; i < 7; i++) {
+            inventory.chipsStack.push(Product.CHIPS);
+        }
+        assertEquals(7, inventory.getProductStock(Product.CHIPS));
+    }
+
+    @Test
+    public void getCurrentCandyStockWithGetProductStock() {
+        for (int i = 0; i < 5; i++) {
+            inventory.candyStack.push(Product.CANDY);
+        }
+        assertEquals(5, inventory.getProductStock(Product.CANDY));
+    }
 }

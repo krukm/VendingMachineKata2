@@ -8,6 +8,24 @@ public class Inventory {
     Stack<Product> chipsStack = new Stack<>();
     Stack<Product> candyStack = new Stack<>();
 
+
+    public int getProductStock(Product product) {
+        int inventory = 0;
+
+        switch (product) {
+            case COLA:
+                inventory = this.colaStack.size();
+                break;
+            case CHIPS:
+                inventory = this.chipsStack.size();
+                break;
+            case CANDY:
+                inventory = this.candyStack.size();
+                break;
+        }
+        return inventory;
+    }
+
     public Product removeProduct(Product product) {
         switch (product) {
             case COLA:

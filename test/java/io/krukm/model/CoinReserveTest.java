@@ -157,7 +157,7 @@ public class CoinReserveTest {
         coinReserve.coinReturn.push(Coin.TWENTYFIVE);
         coinReserve.coinReturn.push(Coin.TEN);
         coinReserve.coinReturn.push(Coin.FIVE);
-        assertEquals(change, coinReserve.getCoinReturn());
+        assertEquals(change, coinReserve.activateCoinReturn());
     }
 
     @Test
@@ -167,7 +167,7 @@ public class CoinReserveTest {
         coinReserve.coinReturn.push(Coin.TWENTYFIVE);
         coinReserve.coinReturn.push(Coin.TEN);
         coinReserve.coinReturn.push(Coin.FIVE);
-        coinReserve.getCoinReturn();
+        coinReserve.activateCoinReturn();
         assertTrue(coinReserve.coinReturn.empty());
     }
 
