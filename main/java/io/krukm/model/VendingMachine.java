@@ -7,6 +7,7 @@ public class VendingMachine {
 
     Display display = new Display();
     CoinReserve coinReserve = new CoinReserve();
+    Inventory inventory = new Inventory();
 
 
 
@@ -33,6 +34,15 @@ public class VendingMachine {
 
         display.setMessage(2, product.price);
         return false;
+    }
+
+    public Product makePurchase(Product product, Stack<Coin> coinHold) {
+        if (enoughCoinsEntered(product, coinHold)) {
+            if (inventory.productInStock(product)) {
+                return inventory.dispenseProduct(product);
+            }
+        }
+        return null;
     }
 
 
