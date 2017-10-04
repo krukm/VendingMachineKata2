@@ -15,158 +15,168 @@ public class CoinReserveTest {
 
     @Test
     public void rejectOneWhenAdded() {
-        assertFalse(coinReserve.coinAccepted(Coin.ONE));
+        assertFalse(coinReserve.coinAccepted(Coin.COIN_ONE));
     }
 
     @Test
     public void acceptFiveWhenAdded() {
-        assertTrue(coinReserve.coinAccepted(Coin.FIVE));
+        assertTrue(coinReserve.coinAccepted(Coin.COIN_TWO));
     }
 
     @Test
     public void acceptTenWhenAdded() {
-        assertTrue(coinReserve.coinAccepted(Coin.TEN));
+        assertTrue(coinReserve.coinAccepted(Coin.COIN_THREE));
     }
 
     @Test
     public void acceptTwentyFiveWhenAdded() {
-        assertTrue(coinReserve.coinAccepted(Coin.TWENTYFIVE));
+        assertTrue(coinReserve.coinAccepted(Coin.COIN_FOUR));
     }
 
     @Test
     public void addFiveToFiveStackWhenAccepted() {
-        coinReserve.addCoin(Coin.FIVE);
-        assertFalse(coinReserve.fiveStack.empty());
+        coinReserve.addCoin(Coin.COIN_TWO);
+        assertFalse(coinReserve.coinTwoSleeve.empty());
     }
 
     @Test
     public void addTenToTenStackWhenAccepted() {
-        coinReserve.addCoin(Coin.TEN);
-        assertFalse(coinReserve.tenStack.empty());
+        coinReserve.addCoin(Coin.COIN_THREE);
+        assertFalse(coinReserve.coinThreeSleeve.empty());
     }
 
     @Test
     public void addTwentyFiveToTwentyFiveStackWhenAccepted() {
-        coinReserve.addCoin(Coin.TWENTYFIVE);
-        assertFalse(coinReserve.twentyFiveStack.empty());
+        coinReserve.addCoin(Coin.COIN_FOUR);
+        assertFalse(coinReserve.coinFourSleeve.empty());
     }
 
     @Test
     public void addTenFivesWhenReserveIsStocked() {
         coinReserve.stockReserve();
-        assertEquals(10, coinReserve.fiveStack.size());
+        assertEquals(10, coinReserve.coinTwoSleeve.size());
     }
 
     @Test
     public void addTenTensWhenReserveIsStocked() {
         coinReserve.stockReserve();
-        assertEquals(10, coinReserve.tenStack.size());
+        assertEquals(10, coinReserve.coinThreeSleeve.size());
     }
 
     @Test
     public void addTenTwentyFivesWhenReserveIsStocked() {
         coinReserve.stockReserve();
-        assertEquals(10, coinReserve.twentyFiveStack.size());
+        assertEquals(10, coinReserve.coinFourSleeve.size());
     }
 
     @Test
-    public void getTheTotalOfCoinReserveWhenCalled() {
-        coinReserve.stockReserve();
-        assertEquals((Coin.FIVE.value * 10) + (Coin.TEN.value * 10) + (Coin.TWENTYFIVE.value * 10), coinReserve.reserveTotal());
+    public void getTheContentsOfCoinReserveWhenReserveTotalCalled() {
+        coinReserve.coinFourSleeve.add(Coin.COIN_FOUR);
+        coinReserve.coinThreeSleeve.add(Coin.COIN_THREE);
+        coinReserve.coinThreeSleeve.add(Coin.COIN_THREE);
+        coinReserve.coinTwoSleeve.add(Coin.COIN_TWO);
+
+        change.add(Coin.COIN_TWO);
+        change.add(Coin.COIN_THREE);
+        change.add(Coin.COIN_THREE);
+        change.add(Coin.COIN_FOUR);
+
+        assertEquals(change, coinReserve.reserveTotal());
     }
 
     @Test
     public void removeFiveWithRemoveCoin() {
         coinReserve.stockReserve();
-        coinReserve.removeCoin(coinReserve.fiveStack);
-        assertEquals(9, coinReserve.fiveStack.size());
+        coinReserve.removeCoin(coinReserve.coinTwoSleeve);
+        assertEquals(9, coinReserve.coinTwoSleeve.size());
     }
 
     @Test
     public void removeTenWithRemoveCoin() {
         coinReserve.stockReserve();
-        coinReserve.removeCoin(coinReserve.tenStack);
-        assertEquals(9, coinReserve.tenStack.size());
+        coinReserve.removeCoin(coinReserve.coinThreeSleeve);
+        assertEquals(9, coinReserve.coinThreeSleeve.size());
     }
 
     @Test
     public void removeTwentyFiveWithRemoveCoin() {
         coinReserve.stockReserve();
-        coinReserve.removeCoin(coinReserve.twentyFiveStack);
-        assertEquals(9, coinReserve.twentyFiveStack.size());
+        coinReserve.removeCoin(coinReserve.coinFourSleeve);
+        assertEquals(9, coinReserve.coinFourSleeve.size());
     }
 
     @Test
     public void getCoinTotalWhenUsingStackTotalMethod() {
-        change.push(Coin.FIVE);
-        change.push(Coin.TEN);
-        change.push(Coin.TWENTYFIVE);
-        assertEquals(40, coinReserve.stackTotal(change));
+        change.push(Coin.COIN_TWO);
+        change.push(Coin.COIN_THREE);
+        change.push(Coin.COIN_FOUR);
+        assertEquals((Coin.COIN_TWO.value + Coin.COIN_THREE.value + Coin.COIN_FOUR.value), coinReserve.stackTotal(change));
     }
 
     @Test
     public void whenOverpaidForProductAddChangeToCoinReturn() {
         coinReserve.stockReserve();
-        assertEquals(25, coinReserve.makeChange(100, 125));
+        coinReserve.makeChange(100, 125);
+        assertEquals(25, coinReserve.stackTotal(coinReserve.coinReturn));
     }
 
     @Test
-    public void whenOverPaidAndReserveIsOutOfTwentyFivesMakeChangeWithTensAndFives() {
-        change.push(Coin.TEN);
-        change.push(Coin.TEN);
-        change.push(Coin.FIVE);
+    public void whenOverPaidAndReserveIsOutOfCoinFourMakeChangeWithCoinThreeAndCoinTwo() {
+        change.push(Coin.COIN_THREE);
+        change.push(Coin.COIN_THREE);
+        change.push(Coin.COIN_TWO);
         coinReserve.stockReserve();
-        coinReserve.twentyFiveStack.removeAllElements();
+        coinReserve.coinFourSleeve.removeAllElements();
         coinReserve.makeChange(100, 125);
         assertEquals(change, coinReserve.coinReturn);
     }
 
     @Test
-    public void whenOverPaidAndReserveIsOutOfTwentyFivesAndTensMakeChangeWithFives() {
+    public void whenOverPaidAndReserveIsOutOfCoinFourAndCoinThreeMakeChangeWithCoinTwo() {
         for (int i = 0; i < 5; i++) {
-            change.push(Coin.FIVE);
+            change.push(Coin.COIN_TWO);
         }
         coinReserve.stockReserve();
-        coinReserve.twentyFiveStack.removeAllElements();
-        coinReserve.tenStack.removeAllElements();
+        coinReserve.coinFourSleeve.removeAllElements();
+        coinReserve.coinThreeSleeve.removeAllElements();
         coinReserve.makeChange(100, 125);
         assertEquals(change, coinReserve.coinReturn);
     }
 
     @Test
-    public void whenOverPaidAndReserveIsOutOfTensMakeChangeWithTwentyFivesAndFives() {
-        change.push(Coin.TWENTYFIVE);
+    public void whenOverPaidAndReserveIsOutOfCoinThreeMakeChangeWithCoinFourAndCoinTwo() {
+        change.push(Coin.COIN_FOUR);
         for (int i = 0; i < 3; i++) {
-            change.push(Coin.FIVE);
+            change.push(Coin.COIN_TWO);
         }
         coinReserve.stockReserve();
-        coinReserve.tenStack.removeAllElements();
+        coinReserve.coinThreeSleeve.removeAllElements();
         coinReserve.makeChange(100, 140);
         assertEquals(change, coinReserve.coinReturn);
     }
 
     @Test
     public void whenCoinReturnRequestedReturnCoins() {
-        change.push(Coin.TWENTYFIVE);
-        change.push(Coin.TWENTYFIVE);
-        change.push(Coin.TWENTYFIVE);
-        change.push(Coin.TEN);
-        change.push(Coin.FIVE);
-        coinReserve.coinReturn.push(Coin.TWENTYFIVE);
-        coinReserve.coinReturn.push(Coin.TWENTYFIVE);
-        coinReserve.coinReturn.push(Coin.TWENTYFIVE);
-        coinReserve.coinReturn.push(Coin.TEN);
-        coinReserve.coinReturn.push(Coin.FIVE);
+        change.push(Coin.COIN_FOUR);
+        change.push(Coin.COIN_FOUR);
+        change.push(Coin.COIN_FOUR);
+        change.push(Coin.COIN_THREE);
+        change.push(Coin.COIN_TWO);
+        coinReserve.coinReturn.push(Coin.COIN_FOUR);
+        coinReserve.coinReturn.push(Coin.COIN_FOUR);
+        coinReserve.coinReturn.push(Coin.COIN_FOUR);
+        coinReserve.coinReturn.push(Coin.COIN_THREE);
+        coinReserve.coinReturn.push(Coin.COIN_TWO);
         assertEquals(change, coinReserve.activateCoinReturn());
     }
 
     @Test
     public void whenCoinReturnRequestedClearCoinReturn() {
-        coinReserve.coinReturn.push(Coin.TWENTYFIVE);
-        coinReserve.coinReturn.push(Coin.TWENTYFIVE);
-        coinReserve.coinReturn.push(Coin.TWENTYFIVE);
-        coinReserve.coinReturn.push(Coin.TEN);
-        coinReserve.coinReturn.push(Coin.FIVE);
+        coinReserve.coinReturn.push(Coin.COIN_FOUR);
+        coinReserve.coinReturn.push(Coin.COIN_FOUR);
+        coinReserve.coinReturn.push(Coin.COIN_FOUR);
+        coinReserve.coinReturn.push(Coin.COIN_THREE);
+        coinReserve.coinReturn.push(Coin.COIN_TWO);
         coinReserve.activateCoinReturn();
         assertTrue(coinReserve.coinReturn.empty());
     }
@@ -180,13 +190,13 @@ public class CoinReserveTest {
     @Test
     public void whenTwentyFiveStackIsEmptyMakeSureChangeCanBeMadeWithTensAndOnes() {
         coinReserve.stockReserve();
-        coinReserve.twentyFiveStack.removeAllElements();
+        coinReserve.coinFourSleeve.removeAllElements();
         assertTrue(coinReserve.canMakeChange());
     }
 
     @Test
     public void whenFiveStackIsEmptyAndTenStackHasOneMakeSureChangeCanNotBeMade() {
-        coinReserve.tenStack.add(Coin.TEN);
+        coinReserve.coinThreeSleeve.add(Coin.COIN_THREE);
         assertFalse(coinReserve.canMakeChange());
     }
 }

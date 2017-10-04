@@ -1,54 +1,64 @@
 package io.krukm.model;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class CoinReserve {
 
-    Stack<Coin> fiveStack = new Stack<>();
-    Stack<Coin> tenStack = new Stack<>();
-    Stack<Coin> twentyFiveStack = new Stack<>();
+    Stack<Coin> coinTwoSleeve = new Stack<>();
+    Stack<Coin> coinThreeSleeve = new Stack<>();
+    Stack<Coin> coinFourSleeve = new Stack<>();
     Stack<Coin> coinReturn = new Stack<>();
 
     public boolean coinAccepted(Coin coin) {
 
         switch(coin) {
-            case ONE:
+            case COIN_ONE:
                 return false;
-            case FIVE:
+            case COIN_TWO:
                 return true;
-            case TEN:
+            case COIN_THREE:
                 return true;
-            case TWENTYFIVE:
+            case COIN_FOUR:
                 return true;
         }
         if (coinAccepted(coin)) return true;
         else return false;
     }
 
-    public int reserveTotal() {
+    public ArrayList<Coin> reserveTotal() {
 
-        Stack<Coin> fiveStack = this.fiveStack;
-        Stack<Coin> tenStack = this.tenStack;
-        Stack<Coin> twentyFiveStack = this.twentyFiveStack;
+        ArrayList<Coin> total = new ArrayList<>();
+        Stack<Coin> coinTwoSleeve = this.coinTwoSleeve;
+        Stack<Coin> coinThreeSleeve = this.coinThreeSleeve;
+        Stack<Coin> coinFourSleeve = this.coinFourSleeve;
 
-        return (fiveStack.size() * 5) + (tenStack.size() * 10) + (twentyFiveStack.size() * 25);
+        total.addAll(coinTwoSleeve);
+        total.addAll(coinThreeSleeve);
+        total.addAll(coinFourSleeve);
+
+        return total;
 
     }
 
     public void addCoin(Coin coin) {
 
-        if(coinAccepted(coin)) {
+        if (coinAccepted(coin)) {
 
-            switch(coin) {
-                case FIVE:
-                    fiveStack.push(Coin.FIVE);
-                case TEN:
-                    tenStack.push(Coin.TEN);
-                case TWENTYFIVE:
-                    twentyFiveStack.push(Coin.TWENTYFIVE);
+            switch (coin) {
+                case COIN_TWO:
+                    coinTwoSleeve.push(Coin.COIN_TWO);
+                    break;
+                case COIN_THREE:
+                    coinThreeSleeve.push(Coin.COIN_THREE);
+                    break;
+                case COIN_FOUR:
+                    coinFourSleeve.push(Coin.COIN_FOUR);
+                    break;
             }
         }
     }
+
 
     public void removeCoin(Stack<Coin> coinStack) {
 
@@ -60,49 +70,49 @@ public class CoinReserve {
     public int makeChange(int productPrice, int coinsInserted) {
 
         int change = coinsInserted - productPrice;
-        int twentyFives = 0;
-        int tens = 0;
-        int fives = 0;
+        int tempCoinFour = 0;
+        int tempCoinThree = 0;
+        int tempCoinTwo = 0;
 
-        Stack<Coin> fiveStack = this.fiveStack;
-        Stack<Coin> tenStack = this.tenStack;
-        Stack<Coin> twentyFiveStack = this.twentyFiveStack;
+        Stack<Coin> coinTwoSleeve = this.coinTwoSleeve;
+        Stack<Coin> coinThreeSleeve = this.coinThreeSleeve;
+        Stack<Coin> coinFourSleeve = this.coinFourSleeve;
         Stack<Coin> coinReturn = this.coinReturn;
 
 
-        if(twentyFiveStack.size() > 0 && tenStack.size() > 0 && fiveStack.size() > 0) {
-            twentyFives = change / 25;
-            tens = (change % 25) / 10;
-            fives = ((change % 25) % 10) / 5;
-        } else if (twentyFiveStack.size() > 0 && tenStack.size() > 0) {
-            twentyFives = change / 25;
-            tens = (change % 25) / 10;
-        } else if (twentyFiveStack.size() > 0 && fiveStack.size() > 0) {
-            twentyFives = change / 25;
-            fives = (change % 25) / 5;
-        } else if (tenStack.size() > 0 && fiveStack.size() > 0) {
-            tens = change / 10;
-            fives = (change % 10) / 5;
+        if(coinFourSleeve.size() > 0 && coinThreeSleeve.size() > 0 && coinTwoSleeve.size() > 0) {
+            tempCoinFour = change / Coin.COIN_FOUR.value;
+            tempCoinThree = (change % Coin.COIN_FOUR.value) / Coin.COIN_THREE.value;
+            tempCoinTwo = ((change % Coin.COIN_FOUR.value) % Coin.COIN_THREE.value) / Coin.COIN_TWO.value;
+        } else if (coinFourSleeve.size() > 0 && coinThreeSleeve.size() > 0) {
+            tempCoinFour = change / Coin.COIN_FOUR.value;
+            tempCoinThree = (change % Coin.COIN_FOUR.value) / Coin.COIN_THREE.value;
+        } else if (coinFourSleeve.size() > 0 && coinTwoSleeve.size() > 0) {
+            tempCoinFour = change / Coin.COIN_FOUR.value;
+            tempCoinTwo = (change % Coin.COIN_FOUR.value) / Coin.COIN_TWO.value;
+        } else if (coinThreeSleeve.size() > 0 && coinTwoSleeve.size() > 0) {
+            tempCoinThree = change / Coin.COIN_THREE.value;
+            tempCoinTwo = (change % Coin.COIN_THREE.value) / Coin.COIN_TWO.value;
         } else {
-            fives = change / 5;
+            tempCoinTwo = change / Coin.COIN_TWO.value;
         }
 
-        while (twentyFives > 0) {
-            coinReturn.push(Coin.TWENTYFIVE);
-            removeCoin(twentyFiveStack);
-            twentyFives --;
+        while (tempCoinFour > 0) {
+            coinReturn.push(Coin.COIN_FOUR);
+            removeCoin(coinFourSleeve);
+            tempCoinFour --;
         }
 
-        while (tens > 0) {
-            coinReturn.push(Coin.TEN);
-            removeCoin(tenStack);
-            tens --;
+        while (tempCoinThree > 0) {
+            coinReturn.push(Coin.COIN_THREE);
+            removeCoin(coinThreeSleeve);
+            tempCoinThree --;
         }
 
-        while (fives > 0) {
-            coinReturn.push(Coin.FIVE);
-            removeCoin(fiveStack);
-            fives --;
+        while (tempCoinTwo > 0) {
+            coinReturn.push(Coin.COIN_TWO);
+            removeCoin(coinTwoSleeve);
+            tempCoinTwo --;
         }
 
         return stackTotal(coinReturn);
@@ -120,21 +130,14 @@ public class CoinReserve {
     }
 
     public boolean canMakeChange() {
-        //25
-        if (this.twentyFiveStack.size() == 0) {
-            if(this.tenStack.size() < 3  && this.fiveStack.size() == 0) {
-                return false;
-            } else if (this.tenStack.size() < 2 && this.fiveStack.size() < 3) {
-                return false;
-            } else if (this.tenStack.size() == 0 && this.fiveStack.size() < 5) {
+
+        if (stackTotal(coinFourSleeve) == 0) {
+            if ((stackTotal(coinThreeSleeve) + stackTotal(coinTwoSleeve) < Coin.COIN_FOUR.value)) {
                 return false;
             }
-        //20 and below
-        } else if (this.tenStack.size() < 2) {
-            if (this.fiveStack.size() < 2) {
+        } else if (stackTotal(coinThreeSleeve) < (Coin.COIN_THREE.value + Coin.COIN_THREE.value)) {
+            if(stackTotal(coinTwoSleeve) < ((Coin.COIN_THREE.value) +(Coin.COIN_THREE.value))) {
                 return false;
-            } else if (this.fiveStack.size() > 3) {
-                return true;
             }
         }
 
@@ -156,9 +159,9 @@ public class CoinReserve {
 
         for(int i = 0; i < 10; i++) {
 
-            fiveStack.push(Coin.FIVE);
-            tenStack.push(Coin.TEN);
-            twentyFiveStack.push(Coin.TWENTYFIVE);
+            coinTwoSleeve.push(Coin.COIN_TWO);
+            coinThreeSleeve.push(Coin.COIN_THREE);
+            coinFourSleeve.push(Coin.COIN_FOUR);
         }
     }
 }
