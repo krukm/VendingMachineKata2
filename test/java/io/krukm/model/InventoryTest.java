@@ -11,76 +11,76 @@ public class InventoryTest {
     private Inventory inventory = new Inventory();
 
     @Test
-    public void whenInventoryIsStockedTenColasAreAdded() {
+    public void whenInventoryIsStockedTenProductOneAreAdded() {
         inventory.stockInventory();
-        assertEquals(10, inventory.colaStack.size());
+        assertEquals(10, inventory.productOneRow.size());
     }
 
     @Test
-    public void whenInventoryIsStockedTenChipsAreAdded() {
+    public void whenInventoryIsStockedTenProductTwoAreAdded() {
         inventory.stockInventory();
-        assertEquals(10, inventory.chipsStack.size());
+        assertEquals(10, inventory.productTwoRow.size());
     }
 
     @Test
-    public void whenInventoryIsStockedTenCandiesAreAdded() {
+    public void whenInventoryIsStockedTenProductThreeAreAdded() {
         inventory.stockInventory();
-        assertEquals(10, inventory.candyStack.size());
+        assertEquals(10, inventory.productThreeRow.size());
     }
 
     @Test
-    public void whenColaIsCalledPullColaFromColaStack() {
+    public void whenProductOneIsCalledPullProductOneFromProductOneStack() {
         inventory.stockInventory();
-        inventory.dispenseProduct(Product.COLA);
-        assertEquals(9, inventory.colaStack.size());
+        inventory.dispenseProduct(Product.PRODUCT_ONE);
+        assertEquals(9, inventory.productOneRow.size());
     }
 
     @Test
-    public void whenChipsIsCalledPullChipsFromChipStack() {
+    public void whenProductTwoIsCalledPullProductTwoFromProductStack() {
         inventory.stockInventory();
-        inventory.dispenseProduct(Product.CHIPS);
-        assertEquals(9, inventory.chipsStack.size());
+        inventory.dispenseProduct(Product.PRODUCT_TWO);
+        assertEquals(9, inventory.productTwoRow.size());
     }
 
     @Test
-    public void whenCandyIsCalledPullCandyFromCandyStack() {
+    public void whenProductThreeIsCalledPullProductThreeFromProductThreeStack() {
         inventory.stockInventory();
-        inventory.dispenseProduct(Product.CANDY);
-        assertEquals(9, inventory.candyStack.size());
+        inventory.dispenseProduct(Product.PRODUCT_THREE);
+        assertEquals(9, inventory.productThreeRow.size());
     }
 
     @Test
-    public void getCurrentColaStockWithGetProductStock() {
+    public void getCurrentProductOneStockWithGetProductStock() {
         for (int i = 0; i < 5; i++) {
-            inventory.colaStack.push(Product.COLA);
+            inventory.productOneRow.add(Product.PRODUCT_ONE);
         }
-        assertEquals(5, inventory.getProductStock(Product.COLA));
+        assertEquals(5, inventory.getProductStock(Product.PRODUCT_ONE));
     }
 
     @Test
-    public void getCurrentChipStockWithGetProductStock() {
+    public void getCurrentProductTwoStockWithGetProductStock() {
         for (int i = 0; i < 7; i++) {
-            inventory.chipsStack.push(Product.CHIPS);
+            inventory.productTwoRow.add(Product.PRODUCT_TWO);
         }
-        assertEquals(7, inventory.getProductStock(Product.CHIPS));
+        assertEquals(7, inventory.getProductStock(Product.PRODUCT_TWO));
     }
 
     @Test
-    public void getCurrentCandyStockWithGetProductStock() {
+    public void getCurrentProductThreeStockWithGetProductStock() {
         for (int i = 0; i < 5; i++) {
-            inventory.candyStack.push(Product.CANDY);
+            inventory.productThreeRow.add(Product.PRODUCT_THREE);
         }
-        assertEquals(5, inventory.getProductStock(Product.CANDY));
+        assertEquals(5, inventory.getProductStock(Product.PRODUCT_THREE));
     }
 
     @Test
     public void whenProductIsInStockReturnTrue() {
-        inventory.candyStack.push(Product.CANDY);
-        assertTrue(inventory.productInStock(Product.CANDY));
+        inventory.productThreeRow.add(Product.PRODUCT_THREE);
+        assertTrue(inventory.productInStock(Product.PRODUCT_THREE));
     }
 
     @Test
     public void whenProductIsNotInStockReturnFalse() {
-        assertFalse(inventory.productInStock(Product.COLA));
+        assertFalse(inventory.productInStock(Product.PRODUCT_ONE));
     }
 }

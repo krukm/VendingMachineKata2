@@ -43,19 +43,16 @@ public class CoinReserve {
 
     public void addCoin(Coin coin) {
 
-        if (coinAccepted(coin)) {
-
-            switch (coin) {
-                case COIN_TWO:
-                    coinTwoSleeve.push(Coin.COIN_TWO);
-                    break;
-                case COIN_THREE:
-                    coinThreeSleeve.push(Coin.COIN_THREE);
-                    break;
-                case COIN_FOUR:
-                    coinFourSleeve.push(Coin.COIN_FOUR);
-                    break;
-            }
+        switch (coin) {
+            case COIN_TWO:
+                coinTwoSleeve.push(Coin.COIN_TWO);
+                break;
+            case COIN_THREE:
+                coinThreeSleeve.push(Coin.COIN_THREE);
+                break;
+            case COIN_FOUR:
+                coinFourSleeve.push(Coin.COIN_FOUR);
+                break;
         }
     }
 
@@ -67,7 +64,7 @@ public class CoinReserve {
         }
     }
 
-    public int makeChange(int productPrice, int coinsInserted) {
+    public void makeChange(int productPrice, int coinsInserted) {
 
         int change = coinsInserted - productPrice;
         int tempCoinFour = 0;
@@ -114,8 +111,6 @@ public class CoinReserve {
             removeCoin(coinTwoSleeve);
             tempCoinTwo --;
         }
-
-        return stackTotal(coinReturn);
     }
 
     public Stack<Coin> activateCoinReturn() {
