@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.Stack;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class VendingMachineTest {
 
@@ -38,5 +39,13 @@ public class VendingMachineTest {
         vendingMachine.insertCoin(Coin.COIN_THREE);
         vendingMachine.insertCoin(Coin.COIN_TWO);
         assertEquals(coins, vendingMachine.activateCoinReturn());
+    }
+
+    @Test
+    public void whenProductSelectedCheckIfEnoughCoinsInsertedToPurchase() {
+        while (coins.size() < 5) {
+            coins.add(Coin.COIN_FOUR);
+        }
+        assertTrue(vendingMachine.enoughCoinsEntered(Product.PRODUCT_THREE, coins));
     }
 }

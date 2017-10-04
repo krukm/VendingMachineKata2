@@ -25,4 +25,12 @@ public class VendingMachine {
         return coinReserve.activateCoinReturn();
     }
 
+    public boolean enoughCoinsEntered(Product product, Stack<Coin> coinHold) {
+
+        if (coinReserve.stackTotal(coinHold) > product.price) {
+            return true;
+        }
+        return false;
+    }
+
 }
