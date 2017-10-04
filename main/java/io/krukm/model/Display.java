@@ -10,9 +10,11 @@ public class Display {
     private DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
 
-    public String getMessage(int code, int price) {
+    public String message;
 
-        String message;
+    public void setMessage(int code, int price) {
+
+        this.message = message;
 
         switch (code) {
             case 1:
@@ -34,7 +36,9 @@ public class Display {
                 message = displayMessage.get(0);
                 break;
         }
+    }
 
+    public String getMessage() {
         return message;
     }
 }
