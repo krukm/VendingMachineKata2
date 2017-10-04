@@ -9,6 +9,7 @@ import static junit.framework.TestCase.assertEquals;
 public class VendingMachineTest {
 
     private VendingMachine vendingMachine = new VendingMachine();
+    private Stack<Coin> coins = new Stack<>();
 
     @Test
     public void whenEncounteringIdleVendingMachineDisplayShouldGiveInstructionToInsertCoin() {
@@ -23,7 +24,6 @@ public class VendingMachineTest {
 
     @Test
     public void whenInsertedCoinsShouldBeAddedToTemporaryHoldUntilProductSelected() {
-        Stack<Coin> coins = new Stack<>();
         coins.add(Coin.COIN_FOUR);
         coins.add(Coin.COIN_THREE);
         vendingMachine.insertCoin(Coin.COIN_FOUR);
@@ -33,6 +33,10 @@ public class VendingMachineTest {
 
     @Test
     public void whenPurchaseIsAbortedReturnInsertedCoins() {
-
+        coins.add(Coin.COIN_THREE);
+        coins.add(Coin.COIN_TWO);
+        vendingMachine.insertCoin(Coin.COIN_THREE);
+        vendingMachine.insertCoin(Coin.COIN_TWO);
+        assertEquals(coins, vendingMachine.activateCoinReturn());
     }
 }

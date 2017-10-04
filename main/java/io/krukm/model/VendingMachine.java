@@ -1,6 +1,8 @@
 package io.krukm.model;
 
 
+import java.util.Stack;
+
 public class VendingMachine {
 
     Display display = new Display();
@@ -19,8 +21,8 @@ public class VendingMachine {
         }
     }
 
-    public void activateCoinReturn() {
-        coinReserve.activateCoinReturn();
+    public Stack<Coin> activateCoinReturn() {
+        return coinReserve.activateCoinReturn();
     }
 
 }
