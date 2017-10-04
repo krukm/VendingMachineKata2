@@ -117,7 +117,7 @@ public class CoinReserveTest {
     public void whenOverpaidForProductAddChangeToCoinReturn() {
         coinReserve.stockReserve();
         coinReserve.makeChange(100, 125);
-        assertEquals(25, coinReserve.stackTotal(coinReserve.coinReturn));
+        assertEquals(25, coinReserve.stackTotal(coinReserve.coinHold));
     }
 
     @Test
@@ -128,7 +128,7 @@ public class CoinReserveTest {
         coinReserve.stockReserve();
         coinReserve.coinFourSleeve.removeAllElements();
         coinReserve.makeChange(100, 125);
-        assertEquals(change, coinReserve.coinReturn);
+        assertEquals(change, coinReserve.coinHold);
     }
 
     @Test
@@ -140,7 +140,7 @@ public class CoinReserveTest {
         coinReserve.coinFourSleeve.removeAllElements();
         coinReserve.coinThreeSleeve.removeAllElements();
         coinReserve.makeChange(100, 125);
-        assertEquals(change, coinReserve.coinReturn);
+        assertEquals(change, coinReserve.coinHold);
     }
 
     @Test
@@ -152,7 +152,7 @@ public class CoinReserveTest {
         coinReserve.stockReserve();
         coinReserve.coinThreeSleeve.removeAllElements();
         coinReserve.makeChange(100, 140);
-        assertEquals(change, coinReserve.coinReturn);
+        assertEquals(change, coinReserve.coinHold);
     }
 
     @Test
@@ -162,23 +162,23 @@ public class CoinReserveTest {
         change.push(Coin.COIN_FOUR);
         change.push(Coin.COIN_THREE);
         change.push(Coin.COIN_TWO);
-        coinReserve.coinReturn.push(Coin.COIN_FOUR);
-        coinReserve.coinReturn.push(Coin.COIN_FOUR);
-        coinReserve.coinReturn.push(Coin.COIN_FOUR);
-        coinReserve.coinReturn.push(Coin.COIN_THREE);
-        coinReserve.coinReturn.push(Coin.COIN_TWO);
+        coinReserve.coinHold.push(Coin.COIN_FOUR);
+        coinReserve.coinHold.push(Coin.COIN_FOUR);
+        coinReserve.coinHold.push(Coin.COIN_FOUR);
+        coinReserve.coinHold.push(Coin.COIN_THREE);
+        coinReserve.coinHold.push(Coin.COIN_TWO);
         assertEquals(change, coinReserve.activateCoinReturn());
     }
 
     @Test
     public void whenCoinReturnRequestedClearCoinReturn() {
-        coinReserve.coinReturn.push(Coin.COIN_FOUR);
-        coinReserve.coinReturn.push(Coin.COIN_FOUR);
-        coinReserve.coinReturn.push(Coin.COIN_FOUR);
-        coinReserve.coinReturn.push(Coin.COIN_THREE);
-        coinReserve.coinReturn.push(Coin.COIN_TWO);
+        coinReserve.coinHold.push(Coin.COIN_FOUR);
+        coinReserve.coinHold.push(Coin.COIN_FOUR);
+        coinReserve.coinHold.push(Coin.COIN_FOUR);
+        coinReserve.coinHold.push(Coin.COIN_THREE);
+        coinReserve.coinHold.push(Coin.COIN_TWO);
         coinReserve.activateCoinReturn();
-        assertTrue(coinReserve.coinReturn.empty());
+        assertTrue(coinReserve.coinHold.empty());
     }
 
     @Test

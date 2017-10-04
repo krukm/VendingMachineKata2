@@ -8,7 +8,7 @@ public class CoinReserve {
     Stack<Coin> coinTwoSleeve = new Stack<>();
     Stack<Coin> coinThreeSleeve = new Stack<>();
     Stack<Coin> coinFourSleeve = new Stack<>();
-    Stack<Coin> coinReturn = new Stack<>();
+    Stack<Coin> coinHold = new Stack<>();
 
     public boolean coinAccepted(Coin coin) {
 
@@ -74,7 +74,7 @@ public class CoinReserve {
         Stack<Coin> coinTwoSleeve = this.coinTwoSleeve;
         Stack<Coin> coinThreeSleeve = this.coinThreeSleeve;
         Stack<Coin> coinFourSleeve = this.coinFourSleeve;
-        Stack<Coin> coinReturn = this.coinReturn;
+        Stack<Coin> coinHold = this.coinHold;
 
 
         if(coinFourSleeve.size() > 0 && coinThreeSleeve.size() > 0 && coinTwoSleeve.size() > 0) {
@@ -95,19 +95,19 @@ public class CoinReserve {
         }
 
         while (tempCoinFour > 0) {
-            coinReturn.push(Coin.COIN_FOUR);
+            coinHold.push(Coin.COIN_FOUR);
             removeCoin(coinFourSleeve);
             tempCoinFour --;
         }
 
         while (tempCoinThree > 0) {
-            coinReturn.push(Coin.COIN_THREE);
+            coinHold.push(Coin.COIN_THREE);
             removeCoin(coinThreeSleeve);
             tempCoinThree --;
         }
 
         while (tempCoinTwo > 0) {
-            coinReturn.push(Coin.COIN_TWO);
+            coinHold.push(Coin.COIN_TWO);
             removeCoin(coinTwoSleeve);
             tempCoinTwo --;
         }
@@ -116,11 +116,11 @@ public class CoinReserve {
     public Stack<Coin> activateCoinReturn() {
         Stack<Coin> tempReturn = new Stack<>();
 
-        for (Coin coin : coinReturn) {
+        for (Coin coin : coinHold) {
             tempReturn.push(coin);
         }
 
-        this.coinReturn.removeAllElements();
+        this.coinHold.removeAllElements();
         return tempReturn;
     }
 

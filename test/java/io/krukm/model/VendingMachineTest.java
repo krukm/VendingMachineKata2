@@ -28,6 +28,11 @@ public class VendingMachineTest {
         coins.add(Coin.COIN_THREE);
         vendingMachine.insertCoin(Coin.COIN_FOUR);
         vendingMachine.insertCoin(Coin.COIN_THREE);
-        assertEquals(coins, vendingMachine.insertedCoinHold);
+        assertEquals(coins, vendingMachine.coinReserve.coinHold);
+    }
+
+    @Test
+    public void whenPurchaseIsAbortedReturnInsertedCoins() {
+
     }
 }

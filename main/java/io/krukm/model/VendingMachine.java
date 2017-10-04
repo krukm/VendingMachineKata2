@@ -1,13 +1,10 @@
 package io.krukm.model;
 
-import java.util.Stack;
 
 public class VendingMachine {
 
     Display display = new Display();
     CoinReserve coinReserve = new CoinReserve();
-    Stack<Coin> insertedCoinHold = new Stack<>();
-
 
 
 
@@ -17,9 +14,13 @@ public class VendingMachine {
 
     public void insertCoin(Coin coin) {
         if (coinReserve.coinAccepted(coin)) {
-            insertedCoinHold.add(coin);
-            display.setMessage(5, coinReserve.stackTotal(insertedCoinHold));
+            coinReserve.coinHold.add(coin);
+            display.setMessage(5, coinReserve.stackTotal(coinReserve.coinHold));
         }
+    }
+
+    public void activateCoinReturn() {
+        coinReserve.activateCoinReturn();
     }
 
 }
