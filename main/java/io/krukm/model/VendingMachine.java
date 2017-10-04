@@ -30,7 +30,10 @@ public class VendingMachine {
         if (coinReserve.stackTotal(coinHold) > product.price) {
             return true;
         }
+
+        display.setMessage(2, product.price);
         return false;
     }
+
 
 }
