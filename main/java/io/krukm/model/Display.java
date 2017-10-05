@@ -14,8 +14,6 @@ public class Display {
 
     public void setMessage(int code, int price) {
 
-        this.message = message;
-
         switch (code) {
             case 1:
                 message = displayMessage.get(1);

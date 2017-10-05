@@ -73,4 +73,13 @@ public class VendingMachineTest {
         vendingMachine.makePurchase(Product.PRODUCT_ONE, coins);
         assertEquals("SOLD OUT", vendingMachine.display.getMessage());
     }
+
+    @Test
+    public void whenPurchaseCompletedButOverPaidRemoveChange() {
+        while (coins.size() < 5) {
+            coins.add(Coin.COIN_FOUR);
+        }
+        vendingMachine.makePurchase(Product.PRODUCT_ONE, coins);
+        assertEquals(0, vendingMachine.coinReserve.stackTotal(vendingMachine.coinReserve.getCoinReturn()));
+    }
 }

@@ -112,7 +112,7 @@ public class CoinReserve {
         }
     }
 
-    public Stack<Coin> activateCoinReturn() {
+    public Stack<Coin> getCoinReturn() {
         Stack<Coin> tempReturn = new Stack<>();
 
         for (Coin coin : coinHold) {
@@ -130,7 +130,7 @@ public class CoinReserve {
                 return false;
             }
         } else if (stackTotal(coinThreeSleeve) < (Coin.COIN_THREE.value + Coin.COIN_THREE.value)) {
-            if(stackTotal(coinTwoSleeve) < ((Coin.COIN_THREE.value) +(Coin.COIN_THREE.value))) {
+            if(stackTotal(coinTwoSleeve) < ((Coin.COIN_THREE.value) + (Coin.COIN_THREE.value))) {
                 return false;
             }
         }
