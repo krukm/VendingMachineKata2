@@ -3,23 +3,20 @@ package io.krukm.model;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Inventory {
+class Inventory {
 
     Queue<Product> productOneRow = new LinkedList<>();
     Queue<Product> productTwoRow = new LinkedList<>();
     Queue<Product> productThreeRow = new LinkedList<>();
 
 
-    public boolean productInStock(Product product) {
+    boolean productInStock(Product product) {
 
-        if(getProductStock(product) > 0) {
-            return true;
-        }
+        return getProductStock(product) > 0;
 
-        return false;
     }
 
-    public int getProductStock(Product product) {
+    int getProductStock(Product product) {
         int productInventory = 0;
 
         switch (product) {
@@ -36,7 +33,7 @@ public class Inventory {
         return productInventory;
     }
 
-    public Product dispenseProduct(Product product) {
+    Product dispenseProduct(Product product) {
         switch (product) {
             case PRODUCT_ONE:
                 this.productOneRow.remove();
@@ -48,7 +45,7 @@ public class Inventory {
         return product;
     }
 
-    public void stockInventory() {
+    void stockInventory() {
 
         productOneRow.clear();
         productTwoRow.clear();

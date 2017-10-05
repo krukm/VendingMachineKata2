@@ -4,15 +4,15 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Display {
+class Display {
 
     private ArrayList<String> displayMessage = new ArrayList<>(Arrays.asList("INSERT COIN", "THANK YOU", "PRICE ", "SOLD OUT", "EXACT CHANGE ONLY"));
     private DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
 
-    public String message;
+    private String message;
 
-    public void setMessage(int code, int price) {
+    void setMessage(int code, int price) {
 
         switch (code) {
             case 1:
@@ -36,7 +36,7 @@ public class Display {
         }
     }
 
-    public String getMessage() {
+    String getMessage() {
         return message;
     }
 }

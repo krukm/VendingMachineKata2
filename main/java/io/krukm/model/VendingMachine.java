@@ -6,7 +6,7 @@ import java.util.Stack;
 public class VendingMachine implements UpdateDisplay {
 
     private Display display = new Display();
-    CoinReserve coinReserve = new CoinReserve();
+    private CoinReserve coinReserve = new CoinReserve();
     private Inventory inventory = new Inventory();
 
 
@@ -15,17 +15,25 @@ public class VendingMachine implements UpdateDisplay {
         display.setMessage(0,0);
     }
 
-    public void insertCoin(Coin coin) {
+    void insertCoin(Coin coin) {
         if (coinReserve.coinAccepted(coin)) {
             coinReserve.coinHold.add(coin);
         }
     }
 
-    public Stack<Coin> activateCoinReturn() {
+    int insertedCoinTotal() {
+        return coinReserve.stackTotal(coinReserve.coinHold);
+    }
+
+    Stack<Coin> getInsertedCoins() {
+        return coinReserve.coinHold;
+    }
+
+    Stack<Coin> activateCoinReturn() {
         return coinReserve.getCoinReturn();
     }
 
-    public boolean enoughCoinsEntered(Product product, Stack<Coin> coinHold) {
+    boolean enoughCoinsEntered(Product product, Stack<Coin> coinHold) {
 
         if (coinReserve.stackTotal(coinHold) > product.price) {
             return true;
@@ -35,7 +43,7 @@ public class VendingMachine implements UpdateDisplay {
         return false;
     }
 
-    public boolean makePurchase(Product product, Stack<Coin> coinHold) {
+    boolean makePurchase(Product product, Stack<Coin> coinHold) {
         if (enoughCoinsEntered(product, coinHold)) {
             if (inventory.productInStock(product)) {
                 inventory.dispenseProduct(product);
@@ -56,12 +64,33 @@ public class VendingMachine implements UpdateDisplay {
         return false;
     }
 
-    public void stockProducts() {
+    void stockProducts() {
         inventory.stockInventory();
     }
 
-    public int checkProductStock(Product product) {
+    int checkProductStock(Product product) {
         return inventory.getProductStock(product);
+    }
+
+    void stockCoins() {
+        coinReserve.stockReserve();
+    }
+
+    int checkCoinStock(Coin coin) {
+        int tempTotal = 0;
+
+        switch (coin) {
+            case COIN_TWO:
+                tempTotal = coinReserve.coinTwoSleeve.size();
+                break;
+            case COIN_THREE:
+                tempTotal = coinReserve.coinThreeSleeve.size();
+                break;
+            case COIN_FOUR:
+                tempTotal = coinReserve.coinFourSleeve.size();
+                break;
+        }
+        return tempTotal;
     }
 
     @Override

@@ -3,14 +3,14 @@ package io.krukm.model;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class CoinReserve {
+class CoinReserve {
 
     Stack<Coin> coinTwoSleeve = new Stack<>();
     Stack<Coin> coinThreeSleeve = new Stack<>();
     Stack<Coin> coinFourSleeve = new Stack<>();
     Stack<Coin> coinHold = new Stack<>();
 
-    public boolean coinAccepted(Coin coin) {
+    boolean coinAccepted(Coin coin) {
 
         switch(coin) {
             case COIN_ONE:
@@ -22,11 +22,10 @@ public class CoinReserve {
             case COIN_FOUR:
                 return true;
         }
-        if (coinAccepted(coin)) return true;
-        else return false;
+        return coinAccepted(coin);
     }
 
-    public ArrayList<Coin> reserveTotal() {
+    ArrayList<Coin> reserveTotal() {
 
         ArrayList<Coin> total = new ArrayList<>();
         Stack<Coin> coinTwoSleeve = this.coinTwoSleeve;
@@ -41,7 +40,7 @@ public class CoinReserve {
 
     }
 
-    public void addCoin(Coin coin) {
+    void addCoin(Coin coin) {
 
         switch (coin) {
             case COIN_TWO:
@@ -56,14 +55,14 @@ public class CoinReserve {
         }
     }
 
-    public void removeCoin(Stack<Coin> coinStack) {
+    void removeCoin(Stack<Coin> coinStack) {
 
         if(!coinStack.empty()) {
             coinStack.pop();
         }
     }
 
-    public void makeChange(int productPrice, int coinsInserted) {
+    void makeChange(int productPrice, int coinsInserted) {
 
         int change = coinsInserted - productPrice;
         int tempCoinFour = 0;
@@ -112,7 +111,7 @@ public class CoinReserve {
         }
     }
 
-    public Stack<Coin> getCoinReturn() {
+    Stack<Coin> getCoinReturn() {
         Stack<Coin> tempReturn = new Stack<>();
 
         for (Coin coin : coinHold) {
@@ -123,7 +122,7 @@ public class CoinReserve {
         return tempReturn;
     }
 
-    public boolean canMakeChange() {
+    boolean canMakeChange() {
 
         if (stackTotal(coinFourSleeve) == 0) {
             if ((stackTotal(coinThreeSleeve) + stackTotal(coinTwoSleeve) < Coin.COIN_FOUR.value)) {
@@ -138,7 +137,7 @@ public class CoinReserve {
         return true;
     }
 
-    public int stackTotal(Stack<Coin> coinStack) {
+    int stackTotal(Stack<Coin> coinStack) {
 
         int total = 0;
 
@@ -149,17 +148,20 @@ public class CoinReserve {
     }
 
 
-    public void stockReserve() {
+    void stockReserve() {
+
+        coinTwoSleeve.clear();
+        coinThreeSleeve.clear();
+        coinFourSleeve.clear();
 
         for(int i = 0; i < 10; i++) {
-
             coinTwoSleeve.push(Coin.COIN_TWO);
             coinThreeSleeve.push(Coin.COIN_THREE);
             coinFourSleeve.push(Coin.COIN_FOUR);
         }
     }
 
-    public void depositCoins(Stack<Coin> coinHold) {
+    void depositCoins(Stack<Coin> coinHold) {
 
         for (Coin coin : coinHold) {
             addCoin(coin);

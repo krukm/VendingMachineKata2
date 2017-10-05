@@ -15,7 +15,7 @@ public class VendingMachineTest {
     @Test
     public void whenEncounteringIdleFullyStockedVendingMachineDisplayShouldGiveInstructionToInsertCoin() {
         vendingMachine.stockProducts();
-        vendingMachine.coinReserve.stockReserve();
+        vendingMachine.stockCoins();
         assertEquals("INSERT COIN", vendingMachine.show());
     }
 
@@ -32,7 +32,7 @@ public class VendingMachineTest {
         coins.add(Coin.COIN_THREE);
         vendingMachine.insertCoin(Coin.COIN_FOUR);
         vendingMachine.insertCoin(Coin.COIN_THREE);
-        assertEquals(coins, vendingMachine.coinReserve.coinHold);
+        assertEquals(coins, vendingMachine.getInsertedCoins());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class VendingMachineTest {
             coins.add(Coin.COIN_FOUR);
         }
         vendingMachine.makePurchase(Product.PRODUCT_ONE, coins);
-        assertEquals(0, vendingMachine.coinReserve.stackTotal(vendingMachine.coinReserve.getCoinReturn()));
+        assertEquals(0, vendingMachine.insertedCoinTotal());
     }
 
     @Test
@@ -94,7 +94,7 @@ public class VendingMachineTest {
 
     @Test
     public void whenNoCoinsInsertedAndCanMakeChangeDisplayInsertCoin() {
-        vendingMachine.coinReserve.stockReserve();
+        vendingMachine.stockCoins();
         vendingMachine.updateDisplay();
         assertEquals("INSERT COIN", vendingMachine.show());
     }
@@ -110,10 +110,18 @@ public class VendingMachineTest {
     }
 
     @Test
-    public void whenVendingMachineIsStockedInventoryHasTenOfEachProduct() {
+    public void whenVendingMachineProductsAreStockedInventoryHasTenOfEachProduct() {
         vendingMachine.stockProducts();
         assertEquals(10, vendingMachine.checkProductStock(Product.PRODUCT_ONE));
         assertEquals(10, vendingMachine.checkProductStock(Product.PRODUCT_TWO));
         assertEquals(10, vendingMachine.checkProductStock(Product.PRODUCT_THREE));
+    }
+
+    @Test
+    public void whenVendingMachineCoinsAreStockedCoinSleevesHaveTenOfEachCoin() {
+        vendingMachine.stockCoins();
+        assertEquals(10, vendingMachine.checkCoinStock(Coin.COIN_TWO));
+        assertEquals(10, vendingMachine.checkCoinStock(Coin.COIN_THREE));
+        assertEquals(10, vendingMachine.checkCoinStock(Coin.COIN_FOUR));
     }
 }
