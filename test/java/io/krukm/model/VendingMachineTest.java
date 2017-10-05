@@ -65,7 +65,7 @@ public class VendingMachineTest {
             coins.add(Coin.COIN_FOUR);
         }
         vendingMachine.stockProducts();
-        assertTrue(vendingMachine.makePurchase(Product.PRODUCT_ONE, coins));
+        assertTrue(vendingMachine.selectProduct(Product.PRODUCT_ONE, coins));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class VendingMachineTest {
         while (coins.size() < 5) {
             coins.add(Coin.COIN_FOUR);
         }
-        vendingMachine.makePurchase(Product.PRODUCT_ONE, coins);
+        vendingMachine.selectProduct(Product.PRODUCT_ONE, coins);
         assertEquals("SOLD OUT", vendingMachine.show());
     }
 
@@ -82,7 +82,7 @@ public class VendingMachineTest {
         while (coins.size() < 5) {
             coins.add(Coin.COIN_FOUR);
         }
-        vendingMachine.makePurchase(Product.PRODUCT_ONE, coins);
+        vendingMachine.selectProduct(Product.PRODUCT_ONE, coins);
         assertEquals(0, vendingMachine.insertedCoinTotal());
     }
 
@@ -105,7 +105,7 @@ public class VendingMachineTest {
             coins.add(Coin.COIN_FOUR);
         }
         vendingMachine.stockProducts();
-        vendingMachine.makePurchase(Product.PRODUCT_ONE, coins);
+        vendingMachine.selectProduct(Product.PRODUCT_ONE, coins);
         assertEquals("THANK YOU", vendingMachine.show());
     }
 
