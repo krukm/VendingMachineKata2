@@ -3,7 +3,7 @@ package io.krukm.model;
 
 import java.util.Stack;
 
-public class VendingMachine {
+public class VendingMachine implements UpdateDisplay {
 
     Display display = new Display();
     CoinReserve coinReserve = new CoinReserve();
@@ -18,7 +18,6 @@ public class VendingMachine {
     public void insertCoin(Coin coin) {
         if (coinReserve.coinAccepted(coin)) {
             coinReserve.coinHold.add(coin);
-            display.setMessage(5, coinReserve.stackTotal(coinReserve.coinHold));
         }
     }
 
@@ -55,5 +54,22 @@ public class VendingMachine {
             }
         }
         return false;
+    }
+
+    @Override
+    public void updateDisplay() {
+
+        if (coinReserve.coinHold.size() > 0) {
+            display.setMessage(5, coinReserve.stackTotal(coinReserve.coinHold));
+        } else if (!coinReserve.canMakeChange()) {
+            display.setMessage(4, 0);
+        } else {
+            display.setMessage(0, 0);
+        }
+    }
+
+    @Override
+    public String show() {
+        return display.getMessage();
     }
 }

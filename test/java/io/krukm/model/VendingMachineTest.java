@@ -20,7 +20,8 @@ public class VendingMachineTest {
     @Test
     public void whenInsertingCoinsDisplayShouldShowTotalAmountInsertedSoFar() {
         vendingMachine.insertCoin(Coin.COIN_FOUR);
-        assertEquals("0.25", vendingMachine.display.getMessage());
+        vendingMachine.updateDisplay();
+        assertEquals("0.25", vendingMachine.show());
     }
 
     @Test
@@ -81,5 +82,18 @@ public class VendingMachineTest {
         }
         vendingMachine.makePurchase(Product.PRODUCT_ONE, coins);
         assertEquals(0, vendingMachine.coinReserve.stackTotal(vendingMachine.coinReserve.getCoinReturn()));
+    }
+
+    @Test
+    public void whenNoCoinsInsertedAndCanNotMakeChangeDisplayExactChangeOnly() {
+        vendingMachine.updateDisplay();
+        assertEquals("EXACT CHANGE ONLY", vendingMachine.show());
+    }
+
+    @Test
+    public void whenNoCoinsInsertedAndCanMakeChangeDisplayInsertCoin() {
+        vendingMachine.coinReserve.stockReserve();
+        vendingMachine.updateDisplay();
+        assertEquals("INSERT COIN", vendingMachine.show());
     }
 }
