@@ -62,6 +62,15 @@ public class VendingMachineTest {
             coins.add(Coin.COIN_FOUR);
         }
         vendingMachine.inventory.stockInventory();
-        assertEquals(Product.PRODUCT_ONE, vendingMachine.makePurchase(Product.PRODUCT_ONE, coins));
+        assertTrue(vendingMachine.makePurchase(Product.PRODUCT_ONE, coins));
+    }
+
+    @Test
+    public void whenEnoughCoinsButSelectedProductIsOutOfStockDisplaySoldOut() {
+        while (coins.size() < 5) {
+            coins.add(Coin.COIN_FOUR);
+        }
+        vendingMachine.makePurchase(Product.PRODUCT_ONE, coins);
+        assertEquals("SOLD OUT", vendingMachine.display.getMessage());
     }
 }

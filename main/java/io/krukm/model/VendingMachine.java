@@ -36,13 +36,17 @@ public class VendingMachine {
         return false;
     }
 
-    public Product makePurchase(Product product, Stack<Coin> coinHold) {
+    public boolean makePurchase(Product product, Stack<Coin> coinHold) {
         if (enoughCoinsEntered(product, coinHold)) {
             if (inventory.productInStock(product)) {
-                return inventory.dispenseProduct(product);
+                inventory.dispenseProduct(product);
+                return true;
+            } else if (!inventory.productInStock(product)){
+                display.setMessage(3, product.price);
+                return false;
             }
         }
-        return null;
+        return false;
     }
 
 
