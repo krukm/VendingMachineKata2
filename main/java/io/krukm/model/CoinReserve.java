@@ -56,7 +56,6 @@ public class CoinReserve {
         }
     }
 
-
     public void removeCoin(Stack<Coin> coinStack) {
 
         if(!coinStack.empty()) {
@@ -157,6 +156,13 @@ public class CoinReserve {
             coinTwoSleeve.push(Coin.COIN_TWO);
             coinThreeSleeve.push(Coin.COIN_THREE);
             coinFourSleeve.push(Coin.COIN_FOUR);
+        }
+    }
+
+    public void depositCoins(Stack<Coin> coinHold) {
+
+        for (Coin coin : coinHold) {
+            addCoin(coin);
         }
     }
 }

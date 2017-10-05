@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 public class CoinReserveTest {
 
     private CoinReserve coinReserve = new CoinReserve();
-    private Stack<Coin> change = new Stack<>();
+    private Stack<Coin> coins = new Stack<>();
 
     @Test
     public void rejectOneWhenAdded() {
@@ -76,12 +76,12 @@ public class CoinReserveTest {
         coinReserve.coinThreeSleeve.add(Coin.COIN_THREE);
         coinReserve.coinTwoSleeve.add(Coin.COIN_TWO);
 
-        change.add(Coin.COIN_TWO);
-        change.add(Coin.COIN_THREE);
-        change.add(Coin.COIN_THREE);
-        change.add(Coin.COIN_FOUR);
+        coins.add(Coin.COIN_TWO);
+        coins.add(Coin.COIN_THREE);
+        coins.add(Coin.COIN_THREE);
+        coins.add(Coin.COIN_FOUR);
 
-        assertEquals(change, coinReserve.reserveTotal());
+        assertEquals(coins, coinReserve.reserveTotal());
     }
 
     @Test
@@ -107,10 +107,10 @@ public class CoinReserveTest {
 
     @Test
     public void getCoinTotalWhenUsingStackTotalMethod() {
-        change.push(Coin.COIN_TWO);
-        change.push(Coin.COIN_THREE);
-        change.push(Coin.COIN_FOUR);
-        assertEquals((Coin.COIN_TWO.value + Coin.COIN_THREE.value + Coin.COIN_FOUR.value), coinReserve.stackTotal(change));
+        coins.push(Coin.COIN_TWO);
+        coins.push(Coin.COIN_THREE);
+        coins.push(Coin.COIN_FOUR);
+        assertEquals((Coin.COIN_TWO.value + Coin.COIN_THREE.value + Coin.COIN_FOUR.value), coinReserve.stackTotal(coins));
     }
 
     @Test
@@ -122,52 +122,52 @@ public class CoinReserveTest {
 
     @Test
     public void whenOverPaidAndReserveIsOutOfCoinFourMakeChangeWithCoinThreeAndCoinTwo() {
-        change.push(Coin.COIN_THREE);
-        change.push(Coin.COIN_THREE);
-        change.push(Coin.COIN_TWO);
+        coins.push(Coin.COIN_THREE);
+        coins.push(Coin.COIN_THREE);
+        coins.push(Coin.COIN_TWO);
         coinReserve.stockReserve();
         coinReserve.coinFourSleeve.removeAllElements();
         coinReserve.makeChange(100, 125);
-        assertEquals(change, coinReserve.coinHold);
+        assertEquals(coins, coinReserve.coinHold);
     }
 
     @Test
     public void whenOverPaidAndReserveIsOutOfCoinFourAndCoinThreeMakeChangeWithCoinTwo() {
         for (int i = 0; i < 5; i++) {
-            change.push(Coin.COIN_TWO);
+            coins.push(Coin.COIN_TWO);
         }
         coinReserve.stockReserve();
         coinReserve.coinFourSleeve.removeAllElements();
         coinReserve.coinThreeSleeve.removeAllElements();
         coinReserve.makeChange(100, 125);
-        assertEquals(change, coinReserve.coinHold);
+        assertEquals(coins, coinReserve.coinHold);
     }
 
     @Test
     public void whenOverPaidAndReserveIsOutOfCoinThreeMakeChangeWithCoinFourAndCoinTwo() {
-        change.push(Coin.COIN_FOUR);
+        coins.push(Coin.COIN_FOUR);
         for (int i = 0; i < 3; i++) {
-            change.push(Coin.COIN_TWO);
+            coins.push(Coin.COIN_TWO);
         }
         coinReserve.stockReserve();
         coinReserve.coinThreeSleeve.removeAllElements();
         coinReserve.makeChange(100, 140);
-        assertEquals(change, coinReserve.coinHold);
+        assertEquals(coins, coinReserve.coinHold);
     }
 
     @Test
     public void whenCoinReturnRequestedReturnCoins() {
-        change.push(Coin.COIN_FOUR);
-        change.push(Coin.COIN_FOUR);
-        change.push(Coin.COIN_FOUR);
-        change.push(Coin.COIN_THREE);
-        change.push(Coin.COIN_TWO);
+        coins.push(Coin.COIN_FOUR);
+        coins.push(Coin.COIN_FOUR);
+        coins.push(Coin.COIN_FOUR);
+        coins.push(Coin.COIN_THREE);
+        coins.push(Coin.COIN_TWO);
         coinReserve.coinHold.push(Coin.COIN_FOUR);
         coinReserve.coinHold.push(Coin.COIN_FOUR);
         coinReserve.coinHold.push(Coin.COIN_FOUR);
         coinReserve.coinHold.push(Coin.COIN_THREE);
         coinReserve.coinHold.push(Coin.COIN_TWO);
-        assertEquals(change, coinReserve.activateCoinReturn());
+        assertEquals(coins, coinReserve.activateCoinReturn());
     }
 
     @Test
@@ -198,5 +198,20 @@ public class CoinReserveTest {
     public void whenFiveStackIsEmptyAndTenStackHasOneMakeSureChangeCanNotBeMade() {
         coinReserve.coinThreeSleeve.add(Coin.COIN_THREE);
         assertFalse(coinReserve.canMakeChange());
+    }
+
+    @Test
+    public void whenCoinHoldIsDepositedAddContentsToProperCoinSleeves() {
+        coins.add(Coin.COIN_FOUR);
+        coins.add(Coin.COIN_FOUR);
+        coins.add(Coin.COIN_TWO);
+        coins.add(Coin.COIN_THREE);
+        coins.add(Coin.COIN_TWO);
+        coins.add(Coin.COIN_FOUR);
+        coins.add(Coin.COIN_THREE);
+
+        coinReserve.depositCoins(coins);
+        assertTrue(coinReserve.coinFourSleeve.size() == 3 && coinReserve.coinThreeSleeve.size() == 2
+                && coinReserve.coinTwoSleeve.size() == 2);
     }
 }
