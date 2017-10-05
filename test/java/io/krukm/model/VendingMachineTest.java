@@ -13,8 +13,10 @@ public class VendingMachineTest {
     private Stack<Coin> coins = new Stack<>();
 
     @Test
-    public void whenEncounteringIdleVendingMachineDisplayShouldGiveInstructionToInsertCoin() {
-        assertEquals("INSERT COIN", vendingMachine.display.getMessage());
+    public void whenEncounteringIdleFullyStockedVendingMachineDisplayShouldGiveInstructionToInsertCoin() {
+        vendingMachine.stockProducts();
+        vendingMachine.coinReserve.stockReserve();
+        assertEquals("INSERT COIN", vendingMachine.show());
     }
 
     @Test
@@ -62,7 +64,7 @@ public class VendingMachineTest {
         while (coins.size() < 5) {
             coins.add(Coin.COIN_FOUR);
         }
-        vendingMachine.inventory.stockInventory();
+        vendingMachine.stockProducts();
         assertTrue(vendingMachine.makePurchase(Product.PRODUCT_ONE, coins));
     }
 
@@ -102,8 +104,16 @@ public class VendingMachineTest {
         while (coins.size() < 5) {
             coins.add(Coin.COIN_FOUR);
         }
-        vendingMachine.inventory.stockInventory();
+        vendingMachine.stockProducts();
         vendingMachine.makePurchase(Product.PRODUCT_ONE, coins);
         assertEquals("THANK YOU", vendingMachine.show());
+    }
+
+    @Test
+    public void whenVendingMachineIsStockedInventoryHasTenOfEachProduct() {
+        vendingMachine.stockProducts();
+        assertEquals(10, vendingMachine.checkProductStock(Product.PRODUCT_ONE));
+        assertEquals(10, vendingMachine.checkProductStock(Product.PRODUCT_TWO));
+        assertEquals(10, vendingMachine.checkProductStock(Product.PRODUCT_THREE));
     }
 }
