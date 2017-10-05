@@ -17,7 +17,9 @@ public class VendingMachine implements UpdateDisplay {
 
     void insertCoin(Coin coin) {
         if (coinReserve.coinAccepted(coin)) {
-            coinReserve.coinHold.add(coin);
+            coinReserve.coinHold.push(coin);
+        } else {
+            coinReserve.rejectCoin(coin);
         }
     }
 
@@ -30,7 +32,12 @@ public class VendingMachine implements UpdateDisplay {
     }
 
     Stack<Coin> activateCoinReturn() {
-        return coinReserve.getCoinReturn();
+        coinReserve.refundCoins();
+        return getCoinReturn();
+    }
+
+    Stack<Coin> getCoinReturn() {
+        return coinReserve.coinReturn;
     }
 
     boolean enoughCoinsEntered(Product product, Stack<Coin> coinHold) {

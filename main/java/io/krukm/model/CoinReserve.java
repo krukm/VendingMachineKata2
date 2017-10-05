@@ -9,6 +9,7 @@ class CoinReserve {
     Stack<Coin> coinThreeSleeve = new Stack<>();
     Stack<Coin> coinFourSleeve = new Stack<>();
     Stack<Coin> coinHold = new Stack<>();
+    Stack<Coin> coinReturn = new Stack<>();
 
     boolean coinAccepted(Coin coin) {
 
@@ -21,8 +22,9 @@ class CoinReserve {
                 return true;
             case COIN_FOUR:
                 return true;
+            default:
+                return false;
         }
-        return coinAccepted(coin);
     }
 
     ArrayList<Coin> reserveTotal() {
@@ -42,17 +44,17 @@ class CoinReserve {
 
     void addCoin(Coin coin) {
 
-        switch (coin) {
-            case COIN_TWO:
-                coinTwoSleeve.push(Coin.COIN_TWO);
-                break;
-            case COIN_THREE:
-                coinThreeSleeve.push(Coin.COIN_THREE);
-                break;
-            case COIN_FOUR:
-                coinFourSleeve.push(Coin.COIN_FOUR);
-                break;
-        }
+            switch (coin) {
+                case COIN_TWO:
+                    coinTwoSleeve.push(Coin.COIN_TWO);
+                    break;
+                case COIN_THREE:
+                    coinThreeSleeve.push(Coin.COIN_THREE);
+                    break;
+                case COIN_FOUR:
+                    coinFourSleeve.push(Coin.COIN_FOUR);
+                    break;
+            }
     }
 
     void removeCoin(Stack<Coin> coinStack) {
@@ -111,15 +113,16 @@ class CoinReserve {
         }
     }
 
-    Stack<Coin> getCoinReturn() {
-        Stack<Coin> tempReturn = new Stack<>();
+    void rejectCoin(Coin coin) {
+        coinReturn.push(coin);
+    }
+
+    void refundCoins() {
 
         for (Coin coin : coinHold) {
-            tempReturn.push(coin);
+            coinReturn.push(coin);
         }
-
-        this.coinHold.removeAllElements();
-        return tempReturn;
+        this.coinHold.clear();
     }
 
     boolean canMakeChange() {
@@ -164,7 +167,9 @@ class CoinReserve {
     void depositCoins(Stack<Coin> coinHold) {
 
         for (Coin coin : coinHold) {
-            addCoin(coin);
+            if(coinAccepted(coin)) {
+                addCoin(coin);
+            }
         }
     }
 }

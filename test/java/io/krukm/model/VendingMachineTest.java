@@ -112,16 +112,23 @@ public class VendingMachineTest {
     @Test
     public void whenVendingMachineProductsAreStockedInventoryHasTenOfEachProduct() {
         vendingMachine.stockProducts();
-        assertEquals(10, vendingMachine.checkProductStock(Product.PRODUCT_ONE));
-        assertEquals(10, vendingMachine.checkProductStock(Product.PRODUCT_TWO));
-        assertEquals(10, vendingMachine.checkProductStock(Product.PRODUCT_THREE));
+        assertTrue(vendingMachine.checkProductStock(Product.PRODUCT_ONE) == 10 &&
+                vendingMachine.checkProductStock(Product.PRODUCT_TWO) == 10 &&
+                vendingMachine.checkProductStock(Product.PRODUCT_THREE) == 10);
     }
 
     @Test
     public void whenVendingMachineCoinsAreStockedCoinSleevesHaveTenOfEachCoin() {
         vendingMachine.stockCoins();
-        assertEquals(10, vendingMachine.checkCoinStock(Coin.COIN_TWO));
-        assertEquals(10, vendingMachine.checkCoinStock(Coin.COIN_THREE));
-        assertEquals(10, vendingMachine.checkCoinStock(Coin.COIN_FOUR));
+        assertTrue(vendingMachine.checkCoinStock(Coin.COIN_TWO) == 10 &&
+                vendingMachine.checkCoinStock(Coin.COIN_THREE) == 10 &&
+                vendingMachine.checkCoinStock(Coin.COIN_FOUR) == 10);
+    }
+
+    @Test
+    public void whenCoinIsNotAcceptedAddItToTheCoinReturn() {
+        coins.push(Coin.COIN_ONE);
+        vendingMachine.insertCoin(Coin.COIN_ONE);
+        assertEquals(coins, vendingMachine.getCoinReturn());
     }
 }
